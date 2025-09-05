@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>Gemini Canvas Monitor</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            width: 350px;
+            margin: 0;
+            background-color: #f8f9fa;
+            color: #202124;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 16px;
+            background-color: #ffffff;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        .header h1 {
+            font-size: 16px;
+            margin: 0;
+            font-weight: 600;
+        }
+        .scan-button {
+            padding: 8px 16px;
+            font-size: 14px;
+            font-weight: 500;
+            color: #ffffff;
+            background-color: #1a73e8;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .scan-button:hover {
+            background-color: #185abc;
+        }
+        .scan-button:active {
+            background-color: #1751a3;
+        }
+        .scan-button.loading {
+            background-color: #d2e3fc;
+            cursor: not-allowed;
+        }
+        #status-message {
+            padding: 16px;
+            font-size: 14px;
+            color: #5f6368;
+            text-align: center;
+        }
+        #canvasList {
+            list-style: none;
+            padding: 8px 0;
+            margin: 0;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .canvas-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 16px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        .canvas-item:last-child {
+            border-bottom: none;
+        }
+        .canvas-icon {
+            font-size: 20px;
+            margin-left: 12px;
+            color: #5f6368;
+        }
+        .canvas-details {
+            display: flex;
+            flex-direction: column;
+        }
+        .canvas-title {
+            font-size: 14px;
+            font-weight: 500;
+            color: #202124;
+        }
+        .canvas-subtitle {
+            font-size: 12px;
+            color: #5f6368;
+        }
+        #log-container {
+            background-color: #e9ecef;
+            color: #343a40;
+            font-family: "SF Mono", "Menlo", "Consolas", monospace;
+            font-size: 11px;
+            padding: 12px;
+            margin: 0 16px 16px;
+            border-radius: 8px;
+            max-height: 250px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            border: 1px solid #dee2e6;
+            display: none; /* Hidden by default */
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>آخرین Canvas ها</h1>
+        <button id="scanBtn" class="scan-button">اسکن کن!</button>
+    </div>
+    <div id="status-message">برای مشاهده لیست، اسکن کنید.</div>
+    <ul id="canvasList"></ul>
+    <pre id="log-container"></pre>
+
+    <script src="popup.js"></script>
+</body>
+</html>
