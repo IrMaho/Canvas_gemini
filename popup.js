@@ -3,15 +3,19 @@ document.addEventListener('DOMContentLoaded', () => {
     const statusMessage = document.getElementById('status-message');
     const scanBtn = document.getElementById('scanBtn');
     const logContainer = document.getElementById('log-container');
+    
+    // Modal elements
+    const modal = document.getElementById('content-modal');
+    const modalTitle = document.getElementById('modal-title');
+    const modalBody = document.getElementById('modal-body');
+    const modalCloseBtn = document.getElementById('modal-close-btn');
 
     scanBtn.addEventListener('click', () => {
-        // UI feedback for scanning
         statusMessage.textContent = 'در حال اسکن...';
         statusMessage.style.display = 'block';
         scanBtn.disabled = true;
         scanBtn.classList.add('loading');
         
-        // Clear previous results
         canvasList.innerHTML = '';
         logContainer.textContent = '';
         logContainer.style.display = 'none';
@@ -22,7 +26,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     tabs[0].id,
                     { action: "scanNow" },
                     (response) => {
-                        // Restore button state
                         scanBtn.disabled = false;
                         scanBtn.classList.remove('loading');
 
@@ -54,7 +57,6 @@ document.addEventListener('DOMContentLoaded', () => {
             statusMessage.style.display = 'none';
             logContainer.style.display = 'none';
             
-            // Show newest first
             canvases.reverse().forEach(canvas => {
                 const item = document.createElement('li');
                 item.className = 'canvas-item';
@@ -65,6 +67,15 @@ document.addEventListener('DOMContentLoaded', () => {
                         <div class="canvas-subtitle">${escapeHTML(canvas.subtitle)}</div>
                     </div>
                 `;
+                
+                // Add click listener to show modal
+                item.addEventListener('click', () => {
+                    modalTitle.textContent = canvas.title;
+                    // ** FIX: Use innerHTML to render the code formatting correctly **
+                    modalBody.innerHTML = canvas.content;
+                    modal.style.display = 'flex';
+                });
+                
                 canvasList.appendChild(item);
             });
         } else {
@@ -80,4 +91,17 @@ document.addEventListener('DOMContentLoaded', () => {
         p.textContent = str;
         return p.innerHTML;
     }
+
+    // --- Modal Closing Logic ---
+    modalCloseBtn.addEventListener('click', () => {
+        modal.style.display = 'none';
+    });
+
+    // Close modal if clicking on the overlay
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            modal.style.display = 'none';
+        }
+    });
 });
+
